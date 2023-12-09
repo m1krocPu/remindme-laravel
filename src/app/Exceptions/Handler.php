@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Dictionaries\ErrorDictionary;
+use Illuminate\Http\Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -26,5 +28,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+            $errorCode = ErrorDictionary::getErrorCode($statusCode);
+            
+            return Response::error($errorCode);
+        }
+
+        return parent::render($request, $exception);
     }
 }
