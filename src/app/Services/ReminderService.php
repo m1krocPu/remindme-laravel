@@ -22,4 +22,11 @@ class ReminderService
         return new ReminderCollection($reminders, $limit);
     }
 
+    public static function createReminder($payload)
+    {
+        $reminder = Reminder::create($payload);
+        
+        return new ReminderResource($reminder);
+    }
+
 }
