@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\ReminderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,10 @@ use App\Http\Controllers\SessionController;
 Route::prefix('session')->controller(SessionController::class)->group(function(){
     Route::post('/', 'createSession');
     Route::put('/', 'refreshSession');
+});
+
+Route::middleware('session.auth')->group(function() {
+    Route::prefix('reminders')->controller(ReminderController::class)->group( function() {
+        Route::get('/', 'index');
+    });
 });

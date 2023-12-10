@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
+use App\Models\PersonalAccessToken;
 use App\Services\SessionService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
