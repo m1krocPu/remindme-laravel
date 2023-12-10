@@ -42,4 +42,23 @@ class SessionService
         }
         return false;
     }
+
+    public static function refreshSession($refreshToken)
+    {
+        $personalAccessToken = PersonalAccessToken::accessToken()
+                ->where('refresh_token', $refreshToken)
+                ->first();
+
+        if ( !empty($personalAccessToken) ) {
+            $personalAccessToken->token = Str::uuid();
+            $personalAccessToken->expires_at = Carbon::now()->addSeconds(config('session.lifetime'));
+            $personalAccessToken->save();
+
+            return [
+                'access_token' => $personalAccessToken->token
+            ];
+        }
+        
+        throw new \Exception(ErrorDictionary::ERR_INVALID_REFRESH_TOKEN);
+    }
 }

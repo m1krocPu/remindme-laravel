@@ -10,6 +10,7 @@ class ErrorDictionary
     const ERR_NOT_FOUND = 'ERR_NOT_FOUND';
     const ERR_INTERNAL_ERROR = 'ERR_INTERNAL_ERROR';
     const ERR_INVALID_CREDS = 'ERR_INVALID_CREDS';
+    const ERR_INVALID_REFRESH_TOKEN = 'ERR_INVALID_REFRESH_TOKEN';
 
     const CODE_BAD_REQUEST = 400;
     const CODE_INVALID_ACCESS_TOKEN = 401;
@@ -23,6 +24,7 @@ class ErrorDictionary
     const MSG_NOT_FOUND = 'resource is not found';
     const MSG_INTERNAL_ERROR = 'unable to connect into database';
     const MSG_INVALID_CREDS = 'incorrect username or password';
+    const MSG_INVALID_REFRESH_TOKEN = 'invalid refresh token';
 
     public static function getStatusCode($err)
     {
@@ -33,6 +35,7 @@ class ErrorDictionary
             self::ERR_NOT_FOUND => self::CODE_NOT_FOUND,
             self::ERR_INTERNAL_ERROR => self::CODE_INTERNAL_ERROR,
             self::ERR_INVALID_CREDS => self::CODE_INVALID_ACCESS_TOKEN,
+            self::ERR_INVALID_REFRESH_TOKEN => self::CODE_INVALID_ACCESS_TOKEN,
         ];
 
         return !empty($map[$err]) ? $map[$err] : self::CODE_BAD_REQUEST;
@@ -47,6 +50,7 @@ class ErrorDictionary
             self::ERR_NOT_FOUND => self::MSG_NOT_FOUND,
             self::ERR_INTERNAL_ERROR => self::MSG_INTERNAL_ERROR,
             self::ERR_INVALID_CREDS => self::MSG_INVALID_CREDS,
+            self::ERR_INVALID_REFRESH_TOKEN => self::MSG_INVALID_REFRESH_TOKEN,
         ];
 
         return !empty($map[$err]) ? $map[$err] : null;
