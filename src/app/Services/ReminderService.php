@@ -45,4 +45,8 @@ class ReminderService
         return new ReminderResource($reminder);
     }
 
+    public static function deleteReminder($id): void
+    {
+        Reminder::where('id', $id)->delete();
+    }
 }
