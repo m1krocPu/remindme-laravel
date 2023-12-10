@@ -81,4 +81,33 @@ class ReminderTest extends TestCase
         $this->assertEquals($reminders['remind_at'], $reminder->remind_at);
         $this->assertEquals($reminders['event_at'], $reminder->event_at);
     }
+    public function testReminderUpdate(): void
+    {
+        $this->login();
+        $reminder = Reminder::factory()->create();
+
+        $payload = [
+            'title' => $this->faker->sentence(2),
+            'description' => $this->faker->paragraph(1),
+            'remind_at' => $this->faker->unixTime(new DateTime('+3 days')),
+            'event_at' => $this->faker->unixTime(new DateTime('+3 days'))
+        ];
+
+        $reminderResponse = ReminderService::updateReminder($payload, $reminder->id);
+        $this->assertInstanceOf(ReminderResource::class, $reminderResponse);
+
+        $reminders = json_decode($reminderResponse->toResponse(app('request'))->content(), true);
+        $this->assertArrayHasKey('id', $reminders);
+        $this->assertArrayHasKey('title', $reminders);
+        $this->assertArrayHasKey('description', $reminders);
+        $this->assertArrayHasKey('remind_at', $reminders);
+        $this->assertArrayHasKey('event_at', $reminders);
+
+        $reminder->refresh();
+        $this->assertDatabaseHas('reminders', $reminders);
+        $this->assertEquals($payload['title'], $reminder->title);
+        $this->assertEquals($payload['description'], $reminder->description);
+        $this->assertEquals($payload['remind_at'], $reminder->remind_at);
+        $this->assertEquals($payload['event_at'], $reminder->event_at);
+    }
 }
