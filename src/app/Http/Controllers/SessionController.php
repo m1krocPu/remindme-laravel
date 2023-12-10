@@ -21,4 +21,17 @@ class SessionController extends Controller
             return Response::error($e->getMessage());
         }
     }
+
+    public function refreshSession(Request $request)
+    {
+        try {
+            $refreshToken = $request->bearerToken();
+            $session = SessionService::refreshSession($refreshToken);
+    
+            return Response::success($session);
+
+        } catch(\Exception $e) {
+            return Response::error($e->getMessage());
+        }
+    }
 }

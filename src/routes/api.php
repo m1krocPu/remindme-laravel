@@ -17,4 +17,5 @@ use App\Http\Controllers\SessionController;
 
 Route::prefix('session')->controller(SessionController::class)->group(function(){
     Route::post('/', 'createSession');
+    Route::put('/', 'refreshSession');
 });
