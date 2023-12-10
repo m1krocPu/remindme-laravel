@@ -29,4 +29,11 @@ class ReminderService
         return new ReminderResource($reminder);
     }
 
+    public static function detailReminder($id)
+    {
+        $reminder = Reminder::find($id);
+        
+        return new ReminderResource($reminder);
+    }
+
 }

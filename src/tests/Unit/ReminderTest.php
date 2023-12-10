@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use DateTime;
 use App\Http\Resources\ReminderCollection;
 use App\Http\Resources\ReminderResource;
+use App\Models\Reminder;
 use App\Services\ReminderService;
 use App\Services\SessionService;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -57,5 +58,27 @@ class ReminderTest extends TestCase
         $this->assertArrayHasKey('event_at', $reminders);
 
         $this->assertDatabaseHas('reminders', $reminders);
+    }
+
+    public function testReminderDetail(): void
+    {
+        $this->login();
+        $reminder = Reminder::factory()->create();
+
+        $reminderResponse = ReminderService::detailReminder($reminder->id);
+        $this->assertInstanceOf(ReminderResource::class, $reminderResponse);
+
+        $reminders = json_decode($reminderResponse->toResponse(app('request'))->content(), true);
+        $this->assertArrayHasKey('id', $reminders);
+        $this->assertArrayHasKey('title', $reminders);
+        $this->assertArrayHasKey('description', $reminders);
+        $this->assertArrayHasKey('remind_at', $reminders);
+        $this->assertArrayHasKey('event_at', $reminders);
+
+        $this->assertEquals($reminders['id'], $reminder->id);
+        $this->assertEquals($reminders['title'], $reminder->title);
+        $this->assertEquals($reminders['description'], $reminder->description);
+        $this->assertEquals($reminders['remind_at'], $reminder->remind_at);
+        $this->assertEquals($reminders['event_at'], $reminder->event_at);
     }
 }
