@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reminder;
 use App\Services\ReminderService;
 use App\Http\Requests\ReminderListRequest;
+use App\Http\Requests\ReminderCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -15,5 +16,12 @@ class ReminderController extends Controller
         $reminders = ReminderService::getReminderList($request->limit);
 
         return Response::success($reminders);
+    }
+
+    public function store(ReminderCreateRequest $request)
+    {
+        $reminder = ReminderService::createReminder($request->all());
+
+        return Response::success($reminder);
     }
 }
