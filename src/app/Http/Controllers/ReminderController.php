@@ -24,4 +24,11 @@ class ReminderController extends Controller
 
         return Response::success($reminder);
     }
+
+    public function detail($id)
+    {
+        $reminder = ReminderService::detailReminder($id);
+
+        return Response::success($reminder);
+    }
 }

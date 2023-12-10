@@ -25,5 +25,6 @@ Route::middleware('session.auth')->group(function() {
     Route::prefix('reminders')->controller(ReminderController::class)->group( function() {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::get('/{id}', 'detail');
     });
 });
