@@ -36,4 +36,13 @@ class ReminderService
         return new ReminderResource($reminder);
     }
 
+    public static function updateReminder($payload, $id)
+    {
+        $reminder = Reminder::find($id);
+        $reminder->update($payload);
+        $reminder->refresh();
+        
+        return new ReminderResource($reminder);
+    }
+
 }

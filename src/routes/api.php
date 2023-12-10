@@ -26,5 +26,6 @@ Route::middleware('session.auth')->group(function() {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::get('/{id}', 'detail');
+        Route::put('/{id}', 'update');
     });
 });
