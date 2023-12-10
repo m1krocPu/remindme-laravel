@@ -81,6 +81,7 @@ class ReminderTest extends TestCase
         $this->assertEquals($reminders['remind_at'], $reminder->remind_at);
         $this->assertEquals($reminders['event_at'], $reminder->event_at);
     }
+
     public function testReminderUpdate(): void
     {
         $this->login();
@@ -109,5 +110,15 @@ class ReminderTest extends TestCase
         $this->assertEquals($payload['description'], $reminder->description);
         $this->assertEquals($payload['remind_at'], $reminder->remind_at);
         $this->assertEquals($payload['event_at'], $reminder->event_at);
+    }
+
+    public function testReminderDelete(): void
+    {
+        $this->login();
+        $reminder = Reminder::factory()->create();
+
+        ReminderService::deleteReminder($reminder->id);
+        
+        $this->assertDatabaseMissing('reminders', $reminder->toArray());
     }
 }

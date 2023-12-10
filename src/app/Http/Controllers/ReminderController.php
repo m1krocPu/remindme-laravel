@@ -40,4 +40,11 @@ class ReminderController extends Controller
 
         return Response::success($reminder);
     }
+
+    public function destroy($id)
+    {
+        ReminderService::deleteReminder($id);
+
+        return Response::success();
+    }
 }
