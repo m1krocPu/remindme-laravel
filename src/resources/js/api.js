@@ -41,4 +41,22 @@ export default  {
         }
     },
 
+    async getReminderDetail(id) {
+        try {
+          const result = await this.conn().get(`reminders/${id}`)
+          
+          if (result.data.ok) {
+            return {
+              isOk: true,
+              data: result.data.data
+            }
+          }
+        } catch(result) {
+            return {
+              isOk: false,
+              data: []
+            }
+        }
+    },
+
 }

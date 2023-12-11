@@ -50,3 +50,29 @@
 .data-grid {
     min-height: 700px;
 }
+
+.reminder-info h3 {
+   margin:0
+}
+
+.reminder-info p {
+    margin:10px 12px;
+}
+
+.reminder-info span {
+    margin-right: 10px;
+}
+#grid-container .dx-datagrid-content tr.dx-data-row {
+    cursor: pointer;
+}
+
+.dx-datagrid .dx-link.dx-icon-edit{
+    color:#ffc61c
+}
+
+.dx-datagrid .dx-link.dx-icon-trash{
+    color:#db0012
+}
+.dx-pull-right{
+    float:right
+}
