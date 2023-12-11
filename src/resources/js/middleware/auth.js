@@ -7,7 +7,7 @@ export default async function auth({ next }) {
 
 
     try {
-        await api(true)
+        await api.conn(true)
         .put("session")
         .then((r) => {
             localStorage.setItem("token", r.data.data.access_token);
