@@ -4,7 +4,8 @@ import api from "../api.js";
 const remindersDataSource = function(limit = 10) {
     const dataSource = new CustomStore({
         key: 'id',
-        load: (loadOptions) => {
+        load: async (loadOptions) => {
+            await api.refresh();
             return api.conn().get(`reminders?limit=${limit}`)
                 .then((data) => (
                 {
@@ -13,13 +14,16 @@ const remindersDataSource = function(limit = 10) {
                 ))
                 .catch(() => { throw new Error('Data Loading Error'); });
         },
-        insert: (values) => {
+        insert: async (values) => {
+            await api.refresh();
             return api.conn().post(`reminders`, values)
         },
-        update: (key, values) => {
+        update: async (key, values) => {
+            await api.refresh();
             return api.conn().put(`reminders/${key}`, values)
         },
-        remove: (key) => {
+        remove: async (key) => {
+            await api.refresh();
             return api.conn().delete(`reminders/${key}`)
         },
       });

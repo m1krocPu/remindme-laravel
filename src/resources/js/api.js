@@ -17,6 +17,14 @@ export default  {
         return apiAxios;
     },
 
+    async refresh() {
+      await this.conn(true)
+        .put("session")
+        .then((r) => {
+            localStorage.setItem("token", r.data.data.access_token);
+        })
+    },
+
     async logIn(email, password) {
         try {
           const result = await this.conn().post("session", {
@@ -43,6 +51,7 @@ export default  {
 
     async getReminderDetail(id) {
         try {
+          await this.refresh();
           const result = await this.conn().get(`reminders/${id}`)
           
           if (result.data.ok) {
