@@ -1,6 +1,13 @@
 <template>
   <div class="header">
-    <div class="title">Reminders List</div>
+    <div class="title">Reminders List
+      <div
+        class="dx-button dx-button-mode-text dx-pull-right btn-logout"
+        @click="logout"
+      >
+        <div class="dx-button-content">LOG OUT</div>
+      </div>
+    </div>
   </div>
   <div class="data-grid">
     <DxDataGrid
@@ -120,11 +127,11 @@
         <div class="reminder-info">
           <h3>{{ reminder.title }} 
             <div 
-            class="dx-button dx-button-mode-text dx-pull-right"
-            @click="closeDetail"
-          >
-            <div class="dx-button-content"><i class="dx-icon dx-icon-close"></i></div>
-          </div>
+              class="dx-button dx-button-mode-text dx-pull-right"
+              @click="closeDetail"
+            >
+              <div class="dx-button-content"><i class="dx-icon dx-icon-close"></i></div>
+            </div>
           </h3>
           <p>{{ reminder.description }}</p>
           <hr/>
@@ -221,6 +228,11 @@ export default {
       reload(e) {
         this.reminders = remindersDataSource(e.value)
         this.dataGrid.refresh();
+      },
+      logout() {
+          localStorage.removeItem("token");
+          localStorage.removeItem("refresh_token");
+          this.$router.push(this.$route.query.redirect || "/login");
       }
     }
 };
